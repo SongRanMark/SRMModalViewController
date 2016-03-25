@@ -7,6 +7,7 @@
 //
 
 #import "ViewController.h"
+#import "SRMModalViewController.h"
 
 @interface ViewController ()
 
@@ -14,14 +15,11 @@
 
 @implementation ViewController
 
-- (void)viewDidLoad {
-    [super viewDidLoad];
-    // Do any additional setup after loading the view, typically from a nib.
-}
-
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+- (IBAction)showModalView:(id)sender {
+    SRMModalViewController *modalViewController = [SRMModalViewController new];
+    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 100, 100)];
+    view.backgroundColor = [UIColor whiteColor];
+    [modalViewController showView:view];
 }
 
 @end
