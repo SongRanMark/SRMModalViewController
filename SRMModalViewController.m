@@ -10,6 +10,11 @@
 #import "SRMModalContainerController.h"
 #import "UIView+Constraint.h"
 
+NSString *const SRMModalViewWillShowNotification = @"SRMModalViewWillShowNotification";
+NSString *const SRMModalViewDidShowNotification = @"SRMModalViewDidShowNotification";
+NSString *const SRMModalViewWillHideNotification = @"SRMModalViewWillHideNotification";
+NSString *const SRMModalViewDidHideNotification = @"SRMModalViewDidHideNotification";
+
 @interface SRMModalViewController () <SRMModalContainerControllerDelegate>
 
 @property (nonatomic) SRMModalContainerController *containerViewController;
@@ -43,6 +48,8 @@
 }
 
 - (void)showView:(UIView *)view {
+    [self postWillShowNotification];
+    
     UIWindow *keyWindow = [UIApplication sharedApplication].keyWindow;
     self.containerViewController.backgroundColor = self.backgroundColor;
     self.containerViewController.backgroundOpacity = self.backgroundOpacity;
@@ -63,17 +70,21 @@
             [self showingWithAnimationStyleDefault];
             break;
         default:
+            [self postDidShowNotification];
             break;
     }
 }
 
 - (void)hide {
+    [self postWillHideNotification];
+    
     switch (self.hidingAnimationStyle) {
         case SRMHidingAnimationStyleDefault:
             [self hidingWithAnimationStyleDefault];
             break;
         default:
             [self clear];
+            [self postDidHideNotification];
             break;
     }
 }
@@ -121,6 +132,8 @@
     self.contentView.transform = CGAffineTransformScale(CGAffineTransformIdentity, 1.1, 1.1);
     [UIView animateWithDuration:0.1 animations:^{
         self.contentView.transform = CGAffineTransformScale(CGAffineTransformIdentity, 1, 1);
+    } completion:^(BOOL finished) {
+        [self postDidShowNotification];
     }];
 }
 
@@ -129,7 +142,40 @@
         self.containerViewController.view.alpha = 0;
     } completion:^(BOOL finished) {
         [self clear];
+        [self postDidHideNotification];
     }];
+}
+
+- (void)postWillShowNotification {
+    [[NSNotificationCenter defaultCenter] postNotificationName:SRMModalViewWillShowNotification object:nil];
+    
+    if ([self.delegate respondsToSelector:@selector(modalViewWillShow:)]) {
+        [self.delegate modalViewWillShow:self];
+    }
+}
+
+- (void)postDidShowNotification {
+    [[NSNotificationCenter defaultCenter] postNotificationName:SRMModalViewDidShowNotification object:nil];
+    
+    if ([self.delegate respondsToSelector:@selector(modalViewDidShow:)]) {
+        [self.delegate modalViewDidShow:self];
+    }
+}
+
+- (void)postWillHideNotification {
+    [[NSNotificationCenter defaultCenter] postNotificationName:SRMModalViewWillHideNotification object:nil];
+    
+    if ([self.delegate respondsToSelector:@selector(modalViewWillHide:)]) {
+        [self.delegate modalViewWillHide:self];
+    }
+}
+
+- (void)postDidHideNotification {
+    [[NSNotificationCenter defaultCenter] postNotificationName:SRMModalViewDidHideNotification object:nil];
+    
+    if ([self.delegate respondsToSelector:@selector(modalViewDidHide:)]) {
+        [self.delegate modalViewDidHide:self];
+    }
 }
 
 #pragma mark Getter
