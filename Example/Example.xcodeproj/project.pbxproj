@@ -14,6 +14,8 @@
 		0397E35D1CA4CC78002F441D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0397E35C1CA4CC78002F441D /* Assets.xcassets */; };
 		0397E3601CA4CC78002F441D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0397E35E1CA4CC78002F441D /* LaunchScreen.storyboard */; };
 		0397E3691CA4CCE5002F441D /* SRMModalViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0397E3681CA4CCE5002F441D /* SRMModalViewController.m */; };
+		B591CBAD1CA77E420021A8DD /* SRMModalContainerController.m in Sources */ = {isa = PBXBuildFile; fileRef = B591CBAC1CA77E420021A8DD /* SRMModalContainerController.m */; };
+		B591CBB01CA780810021A8DD /* UIView+Constraint.m in Sources */ = {isa = PBXBuildFile; fileRef = B591CBAF1CA780810021A8DD /* UIView+Constraint.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -29,6 +31,10 @@
 		0397E3611CA4CC78002F441D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0397E3671CA4CCE5002F441D /* SRMModalViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SRMModalViewController.h; path = ../SRMModalViewController.h; sourceTree = "<group>"; };
 		0397E3681CA4CCE5002F441D /* SRMModalViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SRMModalViewController.m; path = ../SRMModalViewController.m; sourceTree = "<group>"; };
+		B591CBAB1CA77E420021A8DD /* SRMModalContainerController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SRMModalContainerController.h; path = ../SRMModalContainerController.h; sourceTree = "<group>"; };
+		B591CBAC1CA77E420021A8DD /* SRMModalContainerController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SRMModalContainerController.m; path = ../SRMModalContainerController.m; sourceTree = "<group>"; };
+		B591CBAE1CA780810021A8DD /* UIView+Constraint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIView+Constraint.h"; path = "../UIView+Constraint.h"; sourceTree = "<group>"; };
+		B591CBAF1CA780810021A8DD /* UIView+Constraint.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIView+Constraint.m"; path = "../UIView+Constraint.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -45,6 +51,10 @@
 		0397E3441CA4CC75002F441D = {
 			isa = PBXGroup;
 			children = (
+				B591CBAE1CA780810021A8DD /* UIView+Constraint.h */,
+				B591CBAF1CA780810021A8DD /* UIView+Constraint.m */,
+				B591CBAB1CA77E420021A8DD /* SRMModalContainerController.h */,
+				B591CBAC1CA77E420021A8DD /* SRMModalContainerController.m */,
 				0397E3671CA4CCE5002F441D /* SRMModalViewController.h */,
 				0397E3681CA4CCE5002F441D /* SRMModalViewController.m */,
 				0397E34F1CA4CC77002F441D /* Example */,
@@ -157,7 +167,9 @@
 				0397E3581CA4CC77002F441D /* ViewController.m in Sources */,
 				0397E3691CA4CCE5002F441D /* SRMModalViewController.m in Sources */,
 				0397E3551CA4CC77002F441D /* AppDelegate.m in Sources */,
+				B591CBAD1CA77E420021A8DD /* SRMModalContainerController.m in Sources */,
 				0397E3521CA4CC77002F441D /* main.m in Sources */,
+				B591CBB01CA780810021A8DD /* UIView+Constraint.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -308,6 +320,7 @@
 				0397E3661CA4CC78002F441D /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

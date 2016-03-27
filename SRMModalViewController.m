@@ -7,10 +7,12 @@
 //
 
 #import "SRMModalViewController.h"
+#import "SRMModalContainerController.h"
+#import "UIView+Constraint.h"
 
-@interface SRMModalViewController ()
+@interface SRMModalViewController () <SRMModalContainerControllerDelegate>
 
-@property (nonatomic) UIView *containerView;
+@property (nonatomic) SRMModalContainerController *containerViewController;
 @property (nonatomic) UIView *contentView;
 @property (nonatomic) UIViewController *contentViewController;
 
@@ -42,10 +44,13 @@
 
 - (void)showView:(UIView *)view {
     UIWindow *keyWindow = [UIApplication sharedApplication].keyWindow;
-    [keyWindow addSubview:self.containerView];
-    [self constraintsForFillingInSuperViewOfView:self.containerView];
-    [self.containerView addSubview:view];
-    [self constraintsForCenterInSuperViewOfView:view];
+    self.containerViewController.backgroundColor = self.backgroundColor;
+    self.containerViewController.backgroundOpacity = self.backgroundOpacity;
+    UIView *containerView = self.containerViewController.view;
+    [keyWindow addSubview:containerView];
+    [containerView addConstraintsForFillingInSuperView];
+    [containerView addSubview:view];
+    [view addConstraintsForCenterInSuperView];
     self.contentView = view;
     
     // Keep reference of self.
@@ -73,6 +78,16 @@
     }
 }
 
+#pragma mark SRMModalContainerControllerDelegate
+
+- (void)didTapBackgrounView {
+    if (!self.enableTapOutsideToDismiss) {
+        return;
+    }
+    
+    [self hide];
+}
+
 #pragma mark Private
 
 + (NSMutableArray *)instanceArray {
@@ -91,7 +106,10 @@
 }
 
 - (void)clear {
-    [self.containerView removeFromSuperview];
+    [self.contentView removeFromSuperview];
+    [self.containerViewController.view removeFromSuperview];
+    self.contentView = nil;
+    self.contentViewController = nil;
     
     // Remove reference of self.
     if ([self shouldRetainSelf]) {
@@ -108,65 +126,21 @@
 
 - (void)hidingWithAnimationStyleDefault {
     [UIView animateWithDuration:0.3 animations:^{
-        self.containerView.alpha = 0;
+        self.containerViewController.view.alpha = 0;
     } completion:^(BOOL finished) {
         [self clear];
     }];
 }
 
-- (void)constraintsForFillingInSuperViewOfView:(UIView *)contentView {
-    // Content view should be added to super view firstly.
-    if (!contentView.superview) {
-        return;
-    }
-    
-    static NSString *viewKey = @"view";
-    
-    contentView.translatesAutoresizingMaskIntoConstraints = NO;
-    NSArray *horizontalConstraintArray = [NSLayoutConstraint constraintsWithVisualFormat:[NSString stringWithFormat:@"H:|-0-[%@]-0-|", viewKey] options:NSLayoutFormatDirectionLeadingToTrailing metrics:nil views:@{viewKey:contentView}];
-    NSArray *verticalConstraintArray = [NSLayoutConstraint constraintsWithVisualFormat:[NSString stringWithFormat:@"V:|-0-[%@]-0-|", viewKey] options:NSLayoutFormatDirectionLeadingToTrailing metrics:nil views:@{viewKey:contentView}];
-    NSMutableArray *constraintArray = [NSMutableArray new];
-    [constraintArray addObjectsFromArray:horizontalConstraintArray];
-    [constraintArray addObjectsFromArray:verticalConstraintArray];
-    [contentView.superview addConstraints:constraintArray];
-}
-
-- (void)constraintsForCenterInSuperViewOfView:(UIView *)contentView {
-    // Content view should be added to super view firstly.
-    if (!contentView.superview) {
-        return;
-    }
-    
-    contentView.translatesAutoresizingMaskIntoConstraints = NO;
-    NSLayoutConstraint *widthConstraint = [NSLayoutConstraint constraintWithItem:contentView attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1 constant:CGRectGetWidth(contentView.frame)];
-    NSLayoutConstraint *heightConstraint = [NSLayoutConstraint constraintWithItem:contentView attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1 constant:CGRectGetHeight(contentView.frame)];
-    NSLayoutConstraint *horizontalCenterConstraint = [NSLayoutConstraint constraintWithItem:contentView attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:contentView.superview attribute:NSLayoutAttributeCenterX multiplier:1 constant:0];
-    NSLayoutConstraint *verticalCenterConstraint = [NSLayoutConstraint constraintWithItem:contentView attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:contentView.superview attribute:NSLayoutAttributeCenterY multiplier:1 constant:0];
-    NSArray *constraintArray = @[horizontalCenterConstraint, verticalCenterConstraint, widthConstraint, heightConstraint];
-    [contentView.superview addConstraints:constraintArray];
-}
-
 #pragma mark Getter
 
-- (UIView *)containerView {
-    if (!_containerView) {
-        _containerView = [UIView new];
-        // Add background view
-        UIView *backgroundView = [UIView new];
-        backgroundView.backgroundColor = self.backgroundColor;
-        backgroundView.alpha = self.backgroundOpacity;
-        
-        // Add tap gesture recognizer to background view for hiding alert view.
-        if (self.enableTapOutsideToDismiss) {
-            UITapGestureRecognizer *tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(hide)];
-            [backgroundView addGestureRecognizer:tapGestureRecognizer];
-        }
-        
-        [_containerView addSubview:backgroundView];
-        [self constraintsForFillingInSuperViewOfView:backgroundView];
+- (UIViewController *)containerViewController {
+    if (!_containerViewController) {
+        _containerViewController = [SRMModalContainerController new];
+        _containerViewController.delegate = self;
     }
     
-    return _containerView;
+    return _containerViewController;
 }
 
 @end

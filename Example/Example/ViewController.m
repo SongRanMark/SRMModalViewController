@@ -17,6 +17,7 @@
 
 - (IBAction)showModalView:(id)sender {
     SRMModalViewController *modalViewController = [SRMModalViewController new];
+//    modalViewController.enableTapOutsideToDismiss = NO;
     UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 100, 100)];
     view.backgroundColor = [UIColor whiteColor];
     [modalViewController showView:view];
