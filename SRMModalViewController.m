@@ -17,6 +17,7 @@ NSString *const SRMModalViewDidHideNotification = @"SRMModalViewDidHideNotificat
 
 @interface SRMModalViewController () <SRMModalContainerControllerDelegate>
 
+@property (nonatomic) UIWindow *window;
 @property (nonatomic) SRMModalContainerController *containerViewController;
 @property (nonatomic) UIView *contentView;
 @property (nonatomic) UIViewController *contentViewController;
@@ -49,16 +50,14 @@ NSString *const SRMModalViewDidHideNotification = @"SRMModalViewDidHideNotificat
 
 - (void)showView:(UIView *)view {
     [self postWillShowNotification];
-    
-    UIWindow *keyWindow = [UIApplication sharedApplication].keyWindow;
     self.containerViewController.backgroundColor = self.backgroundColor;
     self.containerViewController.backgroundOpacity = self.backgroundOpacity;
-    UIView *containerView = self.containerViewController.view;
-    [keyWindow addSubview:containerView];
-    [containerView addConstraintsForFillingInSuperView];
-    [containerView addSubview:view];
+    self.containerViewController.shouldRotate = self.shouldRotate;
+    [self.containerViewController.view addSubview:view];
     [view addConstraintsForCenterInSuperView];
     self.contentView = view;
+    self.window.rootViewController = self.containerViewController;
+    [self.window makeKeyAndVisible];
     
     // Keep reference of self.
     if ([self shouldRetainSelf]) {
@@ -118,9 +117,11 @@ NSString *const SRMModalViewDidHideNotification = @"SRMModalViewDidHideNotificat
 
 - (void)clear {
     [self.contentView removeFromSuperview];
-    [self.containerViewController.view removeFromSuperview];
     self.contentView = nil;
     self.contentViewController = nil;
+    self.window.rootViewController = nil;
+    self.window.hidden = YES;
+    [[UIApplication sharedApplication].delegate.window makeKeyAndVisible];
     
     // Remove reference of self.
     if ([self shouldRetainSelf]) {
@@ -143,6 +144,7 @@ NSString *const SRMModalViewDidHideNotification = @"SRMModalViewDidHideNotificat
     } completion:^(BOOL finished) {
         [self clear];
         [self postDidHideNotification];
+        self.containerViewController.view.alpha = 1;
     }];
 }
 
@@ -187,6 +189,16 @@ NSString *const SRMModalViewDidHideNotification = @"SRMModalViewDidHideNotificat
     }
     
     return _containerViewController;
+}
+
+- (UIWindow *)window {
+    if (!_window) {
+        _window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
+        _window.windowLevel = UIWindowLevelAlert;
+        _window.opaque = NO;
+    }
+    
+    return _window;
 }
 
 @end

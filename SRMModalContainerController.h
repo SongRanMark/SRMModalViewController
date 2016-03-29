@@ -11,10 +11,9 @@
 
 @interface SRMModalContainerController : UIViewController
 
-// The color of the background mask view, default value is black.
 @property (nonatomic) UIColor *backgroundColor;
-// The opacity of the background mask view, default value is 0.4.
 @property (nonatomic) CGFloat backgroundOpacity;
+@property (nonatomic) BOOL shouldRotate;
 @property (nonatomic, weak) id<SRMModalContainerControllerDelegate> delegate;
 
 @end

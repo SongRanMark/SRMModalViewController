@@ -27,6 +27,10 @@
     [self.backgroundView addGestureRecognizer:tapGestureRecognizer];
 }
 
+- (BOOL)shouldAutorotate {
+    return self.shouldRotate;
+}
+
 #pragma mark Responder
 
 - (void)actionForTappingBackgroundView {
