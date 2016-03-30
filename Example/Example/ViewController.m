@@ -26,6 +26,10 @@
     [defaultCenter addObserver:self selector:@selector(disposeModalViewControllerNotification:) name:SRMModalViewDidHideNotification object:nil];
 }
 
+- (UIStatusBarStyle)preferredStatusBarStyle {
+    return UIStatusBarStyleLightContent;
+}
+
 - (SRMModalViewController *)modalVC {
     if (!_modalVC) {
         _modalVC = [SRMModalViewController new];
