@@ -36,6 +36,8 @@ extern NSString *const SRMModalViewDidHideNotification;
 @property (nonatomic) BOOL enableTapOutsideToDismiss;
 // Determines whether the modal should rotate when the device do it, default value is YES.
 @property (nonatomic) BOOL shouldRotate;
+// If status bar style based on view controller, you can use this property to set status bar style.
+@property (nonatomic) UIStatusBarStyle statusBarStyle;
 @property (nonatomic) SRMShowingAnimationStyle showingAnimationStyle;
 @property (nonatomic) SRMHidingAnimationStyle hidingAnimationStyle;
 

@@ -31,6 +31,10 @@
     return self.shouldRotate;
 }
 
+- (UIStatusBarStyle)preferredStatusBarStyle {
+    return self.statusBarStyle;
+}
+
 #pragma mark Responder
 
 - (void)actionForTappingBackgroundView {
@@ -48,6 +52,12 @@
 
 - (void)setBackgroundOpacity:(CGFloat)backgroundOpacity {
     _backgroundOpacity = backgroundOpacity;
+    
+    // UIView cannot handle touch event when alpha less than or equal to 0.01.
+    if (backgroundOpacity <= 0.01) {
+        backgroundOpacity = 0.02;
+    }
+    
     self.backgroundView.alpha = backgroundOpacity;
 }
 

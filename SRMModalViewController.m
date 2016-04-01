@@ -53,6 +53,7 @@ NSString *const SRMModalViewDidHideNotification = @"SRMModalViewDidHideNotificat
     self.containerViewController.backgroundColor = self.backgroundColor;
     self.containerViewController.backgroundOpacity = self.backgroundOpacity;
     self.containerViewController.shouldRotate = self.shouldRotate;
+    self.containerViewController.statusBarStyle = self.statusBarStyle;
     [self.containerViewController.view addSubview:view];
     [view addConstraintsForCenterInSuperView];
     self.contentView = view;

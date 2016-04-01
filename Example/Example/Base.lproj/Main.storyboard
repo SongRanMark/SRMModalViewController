@@ -17,33 +17,57 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="goL-OW-ze7">
-                                <rect key="frame" x="241" y="285" width="119" height="30"/>
-                                <state key="normal" title="Show modal view">
-                                    <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                </state>
-                                <connections>
-                                    <action selector="showModalView:" destination="BYZ-38-t0r" eventType="touchUpInside" id="P8D-Ed-rj4"/>
-                                </connections>
-                            </button>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="STo-xW-QDi">
-                                <rect key="frame" x="252" y="235" width="97" height="30"/>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="h9M-np-RdD">
+                                <rect key="frame" x="165" y="178" width="270" height="244"/>
+                                <subviews>
+                                    <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="5Uh-LL-fMh">
+                                        <rect key="frame" x="-2" y="78" width="274" height="31"/>
+                                        <connections>
+                                            <action selector="changeBackgroundOpacity:" destination="BYZ-38-t0r" eventType="valueChanged" id="dus-8m-obG"/>
+                                        </connections>
+                                    </slider>
+                                    <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="edK-8Q-nhx">
+                                        <rect key="frame" x="0.0" y="0.0" width="270" height="29"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="270" id="ALL-EP-WyT"/>
+                                        </constraints>
+                                        <segments>
+                                            <segment title="Black"/>
+                                            <segment title="Red"/>
+                                            <segment title="Green"/>
+                                            <segment title="Blue"/>
+                                        </segments>
+                                        <connections>
+                                            <action selector="changeBackgroundColor:" destination="BYZ-38-t0r" eventType="valueChanged" id="LGl-bQ-toq"/>
+                                        </connections>
+                                    </segmentedControl>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="goL-OW-ze7">
+                                        <rect key="frame" x="57" y="208" width="157" height="36"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                        <state key="normal" title="Show modal view"/>
+                                        <connections>
+                                            <action selector="showModalView:" destination="BYZ-38-t0r" eventType="touchUpInside" id="P8D-Ed-rj4"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="97" id="tP9-LT-V8y"/>
+                                    <constraint firstAttribute="trailing" secondItem="5Uh-LL-fMh" secondAttribute="trailing" id="3zu-wu-SiA"/>
+                                    <constraint firstItem="goL-OW-ze7" firstAttribute="top" secondItem="5Uh-LL-fMh" secondAttribute="bottom" constant="100" id="Fc5-fM-CoV"/>
+                                    <constraint firstAttribute="bottom" secondItem="goL-OW-ze7" secondAttribute="bottom" id="OIb-AK-akL"/>
+                                    <constraint firstAttribute="trailing" secondItem="edK-8Q-nhx" secondAttribute="trailing" id="R5r-U7-OmE"/>
+                                    <constraint firstItem="edK-8Q-nhx" firstAttribute="top" secondItem="h9M-np-RdD" secondAttribute="top" id="ZVx-Ha-ePL"/>
+                                    <constraint firstItem="goL-OW-ze7" firstAttribute="centerX" secondItem="h9M-np-RdD" secondAttribute="centerX" id="b0j-RI-ro3"/>
+                                    <constraint firstItem="5Uh-LL-fMh" firstAttribute="top" secondItem="edK-8Q-nhx" secondAttribute="bottom" constant="50" id="dI3-Gj-Iv3"/>
+                                    <constraint firstItem="edK-8Q-nhx" firstAttribute="leading" secondItem="h9M-np-RdD" secondAttribute="leading" id="gSd-KN-TRV"/>
+                                    <constraint firstItem="5Uh-LL-fMh" firstAttribute="leading" secondItem="h9M-np-RdD" secondAttribute="leading" id="tJp-yc-U8t"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
-                                <connections>
-                                    <action selector="hideKeyboard:" destination="BYZ-38-t0r" eventType="editingDidEndOnExit" id="gG3-jh-cGJ"/>
-                                </connections>
-                            </textField>
+                            </view>
                         </subviews>
-                        <color key="backgroundColor" red="0.40000000600000002" green="0.80000001190000003" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="goL-OW-ze7" firstAttribute="top" secondItem="STo-xW-QDi" secondAttribute="bottom" constant="20" id="9yg-eP-BeK"/>
-                            <constraint firstItem="goL-OW-ze7" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="TeG-k4-shb"/>
-                            <constraint firstItem="goL-OW-ze7" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="mt5-ZY-WFw"/>
-                            <constraint firstItem="STo-xW-QDi" firstAttribute="centerX" secondItem="goL-OW-ze7" secondAttribute="centerX" id="poj-Kt-8KX"/>
+                            <constraint firstItem="h9M-np-RdD" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="K8H-hk-lbJ"/>
+                            <constraint firstItem="h9M-np-RdD" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="mhd-13-3ak"/>
                         </constraints>
                     </view>
                 </viewController>

@@ -19,11 +19,11 @@
 @implementation ViewController
 
 - (void)viewDidLoad {
-    NSNotificationCenter *defaultCenter = [NSNotificationCenter defaultCenter];
-    [defaultCenter addObserver:self selector:@selector(disposeModalViewControllerNotification:) name:SRMModalViewWillShowNotification object:nil];
-    [defaultCenter addObserver:self selector:@selector(disposeModalViewControllerNotification:) name:SRMModalViewDidShowNotification object:nil];
-    [defaultCenter addObserver:self selector:@selector(disposeModalViewControllerNotification:) name:SRMModalViewWillHideNotification object:nil];
-    [defaultCenter addObserver:self selector:@selector(disposeModalViewControllerNotification:) name:SRMModalViewDidHideNotification object:nil];
+//    NSNotificationCenter *defaultCenter = [NSNotificationCenter defaultCenter];
+//    [defaultCenter addObserver:self selector:@selector(disposeModalViewControllerNotification:) name:SRMModalViewWillShowNotification object:nil];
+//    [defaultCenter addObserver:self selector:@selector(disposeModalViewControllerNotification:) name:SRMModalViewDidShowNotification object:nil];
+//    [defaultCenter addObserver:self selector:@selector(disposeModalViewControllerNotification:) name:SRMModalViewWillHideNotification object:nil];
+//    [defaultCenter addObserver:self selector:@selector(disposeModalViewControllerNotification:) name:SRMModalViewDidHideNotification object:nil];
 }
 
 - (UIStatusBarStyle)preferredStatusBarStyle {
@@ -38,21 +38,43 @@
     return _modalVC;
 }
 
-- (IBAction)hideKeyboard:(UITextField *)textField {
-    [textField resignFirstResponder];
+- (IBAction)changeBackgroundOpacity:(UISlider *)sender {
+    self.modalVC.backgroundOpacity = sender.value;
+}
+
+- (IBAction)changeBackgroundColor:(UISegmentedControl *)sender {
+    UIColor *backgroundColor;
+    
+    switch (sender.selectedSegmentIndex) {
+        case 0:
+            backgroundColor = [UIColor blackColor];
+            break;
+        case 1:
+            backgroundColor = [UIColor redColor];
+            break;
+        case 2:
+            backgroundColor = [UIColor greenColor];
+            break;
+        case 3:
+            backgroundColor = [UIColor blueColor];
+            break;
+    }
+    
+    self.modalVC.backgroundColor = backgroundColor;
 }
 
 - (IBAction)showModalView:(id)sender {
-    self.modalVC.backgroundOpacity = 0.5;
-    self.modalVC.delegate = self;
+//    self.modalVC.delegate = self;
 //    self.modalVC.enableTapOutsideToDismiss = NO;
 //    self.modalVC.shouldRotate = NO;
-    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 100, 100)];
-    view.backgroundColor = [UIColor whiteColor];
-    [self.modalVC showView:view];
-    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 100, 20)];
-    label.text = @"do rotate?";
-    [view addSubview:label];
+    self.modalVC.statusBarStyle = UIStatusBarStyleLightContent;
+//    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 200, 200)];
+//    view.backgroundColor = [UIColor whiteColor];
+//    [self.modalVC showView:view];
+    UIViewController *viewController = [UIViewController new];
+    viewController.view.frame = CGRectMake(0, 0, 200, 200);
+    viewController.view.backgroundColor = [UIColor whiteColor];
+    [self.modalVC showViewWithController:viewController];
 }
 
 - (void)modalViewWillShow:(SRMModalViewController *)modalViewController {
