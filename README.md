@@ -4,6 +4,8 @@
 [![Platform](https://img.shields.io/cocoapods/p/SRMModalViewController.svg?style=flat)](http://cocoapods.org/pods/SRMModalViewController)
 [![License](https://img.shields.io/cocoapods/l/SRMModalViewController.svg?style=flat)](http://cocoapods.org/pods/SRMModalViewController)
 
+SRMModalViewController support a easy way to display a view with modal style.
+
 ## Installation
 
 SRMModalViewController is available through [CocoaPods](http://cocoapods.org). To install
