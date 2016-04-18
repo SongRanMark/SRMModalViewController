@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		032740D11CAA64DC007D1DC6 /* Reveal.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 032740D01CAA64DC007D1DC6 /* Reveal.framework */; };
 		0397E3521CA4CC77002F441D /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 0397E3511CA4CC77002F441D /* main.m */; };
 		0397E3551CA4CC77002F441D /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 0397E3541CA4CC77002F441D /* AppDelegate.m */; };
 		0397E3581CA4CC77002F441D /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0397E3571CA4CC77002F441D /* ViewController.m */; };
@@ -15,12 +14,12 @@
 		0397E35D1CA4CC78002F441D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0397E35C1CA4CC78002F441D /* Assets.xcassets */; };
 		0397E3601CA4CC78002F441D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0397E35E1CA4CC78002F441D /* LaunchScreen.storyboard */; };
 		0397E3691CA4CCE5002F441D /* SRMModalViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0397E3681CA4CCE5002F441D /* SRMModalViewController.m */; };
+		B5897BE01CC230AC001D0C55 /* ContentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B5897BDF1CC230AC001D0C55 /* ContentViewController.m */; };
 		B591CBAD1CA77E420021A8DD /* SRMModalContainerController.m in Sources */ = {isa = PBXBuildFile; fileRef = B591CBAC1CA77E420021A8DD /* SRMModalContainerController.m */; };
 		B591CBB01CA780810021A8DD /* UIView+Constraint.m in Sources */ = {isa = PBXBuildFile; fileRef = B591CBAF1CA780810021A8DD /* UIView+Constraint.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		032740D01CAA64DC007D1DC6 /* Reveal.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Reveal.framework; sourceTree = "<group>"; };
 		0397E34D1CA4CC76002F441D /* Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Example.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0397E3511CA4CC77002F441D /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		0397E3531CA4CC77002F441D /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -33,6 +32,8 @@
 		0397E3611CA4CC78002F441D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0397E3671CA4CCE5002F441D /* SRMModalViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SRMModalViewController.h; path = ../SRMModalViewController.h; sourceTree = "<group>"; };
 		0397E3681CA4CCE5002F441D /* SRMModalViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SRMModalViewController.m; path = ../SRMModalViewController.m; sourceTree = "<group>"; };
+		B5897BDE1CC230AC001D0C55 /* ContentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContentViewController.h; sourceTree = "<group>"; };
+		B5897BDF1CC230AC001D0C55 /* ContentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContentViewController.m; sourceTree = "<group>"; };
 		B591CBAB1CA77E420021A8DD /* SRMModalContainerController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SRMModalContainerController.h; path = ../SRMModalContainerController.h; sourceTree = "<group>"; };
 		B591CBAC1CA77E420021A8DD /* SRMModalContainerController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SRMModalContainerController.m; path = ../SRMModalContainerController.m; sourceTree = "<group>"; };
 		B591CBAE1CA780810021A8DD /* UIView+Constraint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIView+Constraint.h"; path = "../UIView+Constraint.h"; sourceTree = "<group>"; };
@@ -44,7 +45,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				032740D11CAA64DC007D1DC6 /* Reveal.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -60,7 +60,6 @@
 				B591CBAC1CA77E420021A8DD /* SRMModalContainerController.m */,
 				0397E3671CA4CCE5002F441D /* SRMModalViewController.h */,
 				0397E3681CA4CCE5002F441D /* SRMModalViewController.m */,
-				032740D01CAA64DC007D1DC6 /* Reveal.framework */,
 				0397E34F1CA4CC77002F441D /* Example */,
 				0397E34E1CA4CC76002F441D /* Products */,
 			);
@@ -81,6 +80,8 @@
 				0397E3541CA4CC77002F441D /* AppDelegate.m */,
 				0397E3561CA4CC77002F441D /* ViewController.h */,
 				0397E3571CA4CC77002F441D /* ViewController.m */,
+				B5897BDE1CC230AC001D0C55 /* ContentViewController.h */,
+				B5897BDF1CC230AC001D0C55 /* ContentViewController.m */,
 				0397E3591CA4CC78002F441D /* Main.storyboard */,
 				0397E35C1CA4CC78002F441D /* Assets.xcassets */,
 				0397E35E1CA4CC78002F441D /* LaunchScreen.storyboard */,
@@ -129,6 +130,7 @@
 				TargetAttributes = {
 					0397E34C1CA4CC76002F441D = {
 						CreatedOnToolsVersion = 7.2;
+						DevelopmentTeam = S6G597V837;
 					};
 				};
 			};
@@ -169,6 +171,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				0397E3581CA4CC77002F441D /* ViewController.m in Sources */,
+				B5897BE01CC230AC001D0C55 /* ContentViewController.m in Sources */,
 				0397E3691CA4CCE5002F441D /* SRMModalViewController.m in Sources */,
 				0397E3551CA4CC77002F441D /* AppDelegate.m in Sources */,
 				B591CBAD1CA77E420021A8DD /* SRMModalContainerController.m in Sources */,
@@ -285,6 +288,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Example",
@@ -293,14 +298,10 @@
 				INFOPLIST_FILE = Example/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				OTHER_LDFLAGS = (
-					"-ObjC",
-					"-lz",
-					"-framework",
-					Reveal,
-				);
+				OTHER_LDFLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = com.sr.Example;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Debug;
 		};
@@ -308,6 +309,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Example",
@@ -318,6 +321,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.sr.Example;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Release;
 		};

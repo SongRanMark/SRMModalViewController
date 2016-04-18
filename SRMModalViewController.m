@@ -43,12 +43,44 @@ NSString *const SRMModalViewDidHideNotification = @"SRMModalViewDidHideNotificat
 
 #pragma mark Public
 
++ (instancetype)sharedInstance {
+    static id sharedInstance;
+    static dispatch_once_t once;
+    dispatch_once(&once, ^{
+        sharedInstance = [[self class] new];
+    });
+    
+    return sharedInstance;
+}
+
+- (void)showViewWithController:(UIViewController *)viewController size:(CGSize)size {
+    viewController.view.frame = CGRectMake(0, 0, size.width, size.height);
+    [self showViewWithController:viewController];
+}
+
 - (void)showViewWithController:(UIViewController *)viewController {
     self.contentViewController = viewController;
     [self showView:viewController.view];
 }
 
+- (void)showView:(UIView *)view size:(CGSize)size {
+    view.frame = CGRectMake(0, 0, size.width, size.height);
+    [self showView:view];
+}
+
 - (void)showView:(UIView *)view {
+    if (self.contentView) {
+        [self hidingWithAnimationStyleDefaultAndCompletion:^{
+            [self justShowView:view];
+        }];
+        
+        return;
+    }
+    
+    [self justShowView:view];
+}
+
+- (void)justShowView:(UIView *)view {
     [self postWillShowNotification];
     self.containerViewController.backgroundColor = self.backgroundColor;
     self.containerViewController.backgroundOpacity = self.backgroundOpacity;
@@ -59,11 +91,7 @@ NSString *const SRMModalViewDidHideNotification = @"SRMModalViewDidHideNotificat
     self.contentView = view;
     self.window.rootViewController = self.containerViewController;
     [self.window makeKeyAndVisible];
-    
-    // Keep reference of self.
-    if ([self shouldRetainSelf]) {
-        [[[self class] instanceArray] addObject:self];
-    }
+    [self addReferenceToSelf];
     
     switch (self.showingAnimationStyle) {
         case SRMShowingAnimationStyleDefault:
@@ -76,15 +104,18 @@ NSString *const SRMModalViewDidHideNotification = @"SRMModalViewDidHideNotificat
 }
 
 - (void)hide {
+    [self hideWithCompletion:nil];
+}
+
+- (void)hideWithCompletion:(void(^)())completion {
     [self postWillHideNotification];
     
     switch (self.hidingAnimationStyle) {
         case SRMHidingAnimationStyleDefault:
-            [self hidingWithAnimationStyleDefault];
+            [self hidingWithAnimationStyleDefaultAndCompletion:completion];
             break;
         default:
-            [self clear];
-            [self postDidHideNotification];
+            [self hidingWithAnimationStyleNoneAndCompletion:completion];
             break;
     }
 }
@@ -111,9 +142,13 @@ NSString *const SRMModalViewDidHideNotification = @"SRMModalViewDidHideNotificat
     return instanceArray;
 }
 
-- (BOOL)shouldRetainSelf {
-    // When tap gesture is enabled or show a view with controller, need to keep reference of self, in case that self is a local instance of user.
-    return self.enableTapOutsideToDismiss || self.contentViewController;
+// In case that self is a local instance of user.
+- (void)addReferenceToSelf {
+    [[[self class] instanceArray] addObject:self];
+}
+
+- (void)deleteReferenceFromSelf {
+    [[[self class] instanceArray] removeObject:self];
 }
 
 - (void)clear {
@@ -123,11 +158,7 @@ NSString *const SRMModalViewDidHideNotification = @"SRMModalViewDidHideNotificat
     self.window.rootViewController = nil;
     self.window.hidden = YES;
     [[UIApplication sharedApplication].delegate.window makeKeyAndVisible];
-    
-    // Remove reference of self.
-    if ([self shouldRetainSelf]) {
-        [[[self class] instanceArray] removeObject:self];
-    }
+    [self deleteReferenceFromSelf];
 }
 
 - (void)showingWithAnimationStyleDefault {
@@ -139,14 +170,21 @@ NSString *const SRMModalViewDidHideNotification = @"SRMModalViewDidHideNotificat
     }];
 }
 
-- (void)hidingWithAnimationStyleDefault {
-    [UIView animateWithDuration:0.3 animations:^{
+- (void)hidingWithAnimationStyleDefaultAndCompletion:(void(^)())completion {
+    [UIView animateWithDuration:0.5 animations:^{
         self.containerViewController.view.alpha = 0;
     } completion:^(BOOL finished) {
         [self clear];
+        if (completion) completion();
         [self postDidHideNotification];
         self.containerViewController.view.alpha = 1;
     }];
+}
+
+- (void)hidingWithAnimationStyleNoneAndCompletion:(void(^)())completion {
+        [self clear];
+        if (completion) completion();
+        [self postDidHideNotification];
 }
 
 - (void)postWillShowNotification {

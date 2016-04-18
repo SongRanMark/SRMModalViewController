@@ -41,9 +41,15 @@ extern NSString *const SRMModalViewDidHideNotification;
 @property (nonatomic) SRMShowingAnimationStyle showingAnimationStyle;
 @property (nonatomic) SRMHidingAnimationStyle hidingAnimationStyle;
 
++ (instancetype)sharedInstance;
+// If you do not indicate size of view, it will use current size of view to show. And the layout of content view will be in center.
 - (void)showView:(UIView *)view;
+- (void)showView:(UIView *)view size:(CGSize)size;
 - (void)showViewWithController:(UIViewController *)viewController;
+- (void)showViewWithController:(UIViewController *)viewController size:(CGSize)size;
 - (void)hide;
+// The block completion will run before handler of SRMModalViewDidHideNotification or method '- modalViewDidHide:' of SRMModalViewControllerDelegate
+- (void)hideWithCompletion:(void(^)())completion;
 
 @end
 
