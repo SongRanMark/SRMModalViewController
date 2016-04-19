@@ -18,11 +18,10 @@ pod "SRMModalViewController"
 ## Usage
 
 ```objective-c
-SRMModalViewController *modalViewController = [SRMModalViewController new];
 UIViewController *viewController = [UIViewController new];
 viewController.view.frame = CGRectMake(0, 0, 200, 200);
 viewController.view.backgroundColor = [UIColor whiteColor];
-[modalViewController showViewWithController:viewController];
+[[SRMModalViewController sharedInstance] showViewWithController:viewController];
 ```
 
 or
@@ -30,22 +29,34 @@ or
 ```objective-c
 UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 200, 200)];
 view.backgroundColor = [UIColor whiteColor];
-[modalViewController showView:view];
+[[SRMModalViewController sharedInstance] showView:view];
 ```
 
-You can custom color and opacity of background mask.
+#### Custom color and opacity of background mask.
 
 ```objective-c
-modalViewController.backgroundColor = [UIColor blackColor];
+[SRMModalViewController sharedInstance].backgroundColor = [UIColor blackColor];
 ```
 
 <img src="README resource/BackgroundColor.gif" style="width:270px;height:480px">
 
 ```objective-c
-modalViewController.backgroundOpacity = 0.5;
+[SRMModalViewController sharedInstance].backgroundOpacity = 0.5;
 ```
 
 <img src="README resource/BackgroundOpacity.gif" style="width:270px;height:480px">
+
+#### Show another one in a modal view diplayed already.
+
+```objective-c
+// Hide first one
+[[SRMModalViewController sharedInstance] showView:self.contentView];
+// Do not hide first one
+SRMModalViewController *modalViewController = [SRMModalViewController new];
+[modalViewController showView:self.contentView];
+```
+
+![](README resource/ShowAnother.gif)
 
 You can download example project to get more info.
 
