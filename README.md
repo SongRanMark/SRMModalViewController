@@ -38,13 +38,13 @@ view.backgroundColor = [UIColor whiteColor];
 [SRMModalViewController sharedInstance].backgroundColor = [UIColor blackColor];
 ```
 
-<img src="README resource/BackgroundColor.gif" style="width:270px;height:480px">
+![](README resource/BackgroundColor.gif)
 
 ```objective-c
 [SRMModalViewController sharedInstance].backgroundOpacity = 0.5;
 ```
 
-<img src="README resource/BackgroundOpacity.gif" style="width:270px;height:480px">
+![](README resource/BackgroundOpacity.gif)
 
 #### Show another one in a modal view diplayed already.
 
