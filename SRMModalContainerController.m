@@ -9,12 +9,6 @@
 #import "SRMModalContainerController.h"
 #import "UIView+Constraint.h"
 
-@interface SRMModalContainerController ()
-
-@property (nonatomic) UIView *backgroundView;
-
-@end
-
 @implementation SRMModalContainerController
 
 #pragma mark Override
@@ -41,24 +35,6 @@
     if ([self.delegate respondsToSelector:@selector(didTapBackgrounView)]) {
         [self.delegate didTapBackgrounView];
     }
-}
-
-#pragma mark Setter
-
-- (void)setBackgroundColor:(UIColor *)backgroundColor {
-    _backgroundColor = backgroundColor;
-    self.backgroundView.backgroundColor = backgroundColor;
-}
-
-- (void)setBackgroundOpacity:(CGFloat)backgroundOpacity {
-    _backgroundOpacity = backgroundOpacity;
-    
-    // UIView cannot handle touch event when alpha less than or equal to 0.01.
-    if (backgroundOpacity <= 0.01) {
-        backgroundOpacity = 0.02;
-    }
-    
-    self.backgroundView.alpha = backgroundOpacity;
 }
 
 #pragma mark Getter

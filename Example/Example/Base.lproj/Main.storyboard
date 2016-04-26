@@ -102,7 +102,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="pDO-E4-RE4">
-                                <rect key="frame" x="204.5" y="96" width="191" height="28"/>
+                                <rect key="frame" x="205" y="96" width="191" height="28"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                 <state key="normal" title="do not hide when show another"/>
                                 <connections>

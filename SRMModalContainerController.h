@@ -11,8 +11,7 @@
 
 @interface SRMModalContainerController : UIViewController
 
-@property (nonatomic) UIColor *backgroundColor;
-@property (nonatomic) CGFloat backgroundOpacity;
+@property (nonatomic) UIView *backgroundView;
 @property (nonatomic) BOOL shouldRotate;
 @property (nonatomic) UIStatusBarStyle statusBarStyle;
 @property (nonatomic, weak) id<SRMModalContainerControllerDelegate> delegate;

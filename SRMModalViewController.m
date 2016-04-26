@@ -53,14 +53,14 @@ NSString *const SRMModalViewDidHideNotification = @"SRMModalViewDidHideNotificat
     return sharedInstance;
 }
 
-- (void)showViewWithController:(UIViewController *)viewController size:(CGSize)size {
-    viewController.view.frame = CGRectMake(0, 0, size.width, size.height);
-    [self showViewWithController:viewController];
+- (void)showViewWithController:(UIViewController *)viewController {
+    [self showViewWithController:viewController size:viewController.view.frame.size];
 }
 
-- (void)showViewWithController:(UIViewController *)viewController {
+- (void)showViewWithController:(UIViewController *)viewController size:(CGSize)size {
     self.contentViewController = viewController;
-    [self showView:viewController.view];
+    viewController.view.frame = CGRectMake(0, 0, size.width, size.height);
+    [self showView:viewController.view size:size];
 }
 
 - (void)showView:(UIView *)view size:(CGSize)size {
@@ -81,26 +81,29 @@ NSString *const SRMModalViewDidHideNotification = @"SRMModalViewDidHideNotificat
 }
 
 - (void)justShowView:(UIView *)view {
-    [self postWillShowNotification];
-    self.containerViewController.backgroundColor = self.backgroundColor;
-    self.containerViewController.backgroundOpacity = self.backgroundOpacity;
+    self.containerViewController.backgroundView.backgroundColor = self.backgroundColor;
+    [self setContainerBackgroundOpacity:self.backgroundOpacity];
+    self.containerViewController.backgroundView.alpha = self.backgroundOpacity;
     self.containerViewController.shouldRotate = self.shouldRotate;
     self.containerViewController.statusBarStyle = self.statusBarStyle;
     [self.containerViewController.view addSubview:view];
     [view addConstraintsForCenterInSuperView];
     self.contentView = view;
-    self.window.rootViewController = self.containerViewController;
-    [self.window makeKeyAndVisible];
     [self addReferenceToSelf];
-    
-    switch (self.showingAnimationStyle) {
-        case SRMShowingAnimationStyleDefault:
-            [self showingWithAnimationStyleDefault];
-            break;
-        default:
-            [self postDidShowNotification];
-            break;
-    }
+    self.window.rootViewController = self.containerViewController;
+    [self postWillShowNotification];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self.window makeKeyAndVisible];
+        
+        switch (self.showingAnimationStyle) {
+            case SRMShowingAnimationStyleDefault:
+                [self showingWithAnimationStyleDefault];
+                break;
+            default:
+                [self postDidShowNotification];
+                break;
+        }
+    });
 }
 
 - (void)hide {
@@ -109,15 +112,16 @@ NSString *const SRMModalViewDidHideNotification = @"SRMModalViewDidHideNotificat
 
 - (void)hideWithCompletion:(void(^)())completion {
     [self postWillHideNotification];
-    
-    switch (self.hidingAnimationStyle) {
-        case SRMHidingAnimationStyleDefault:
-            [self hidingWithAnimationStyleDefaultAndCompletion:completion];
-            break;
-        default:
-            [self hidingWithAnimationStyleNoneAndCompletion:completion];
-            break;
-    }
+    dispatch_async(dispatch_get_main_queue(), ^{
+        switch (self.hidingAnimationStyle) {
+            case SRMHidingAnimationStyleDefault:
+                [self hidingWithAnimationStyleDefaultAndCompletion:completion];
+                break;
+            default:
+                [self hidingWithAnimationStyleNoneAndCompletion:completion];
+                break;
+        }
+    });
 }
 
 #pragma mark SRMModalContainerControllerDelegate
@@ -162,22 +166,41 @@ NSString *const SRMModalViewDidHideNotification = @"SRMModalViewDidHideNotificat
 }
 
 - (void)showingWithAnimationStyleDefault {
-    self.contentView.transform = CGAffineTransformScale(CGAffineTransformIdentity, 1.1, 1.1);
-    [UIView animateWithDuration:0.1 animations:^{
-        self.contentView.transform = CGAffineTransformScale(CGAffineTransformIdentity, 1, 1);
+    self.containerViewController.backgroundView.alpha = 0;
+    [UIView animateWithDuration:0.3 animations:^{
+        [self setContainerBackgroundOpacity:self.backgroundOpacity];
+    }];
+    self.contentView.alpha = 0;
+    self.contentView.transform = CGAffineTransformScale(CGAffineTransformIdentity, 0.4, 0.4);
+    [UIView animateWithDuration:0.2 animations:^{
+        self.contentView.alpha = 1;
+        self.contentView.transform = CGAffineTransformScale(CGAffineTransformIdentity, 1.1, 1.1);
     } completion:^(BOOL finished) {
-        [self postDidShowNotification];
+        [UIView animateWithDuration:0.1 delay:0 options:UIViewAnimationOptionCurveEaseOut animations:^{
+            self.contentView.transform = CGAffineTransformScale(CGAffineTransformIdentity, 1, 1);
+        } completion:^(BOOL finalFinished) {
+            [self postDidShowNotification];
+        }];
     }];
 }
 
 - (void)hidingWithAnimationStyleDefaultAndCompletion:(void(^)())completion {
-    [UIView animateWithDuration:0.5 animations:^{
-        self.containerViewController.view.alpha = 0;
+    [UIView animateWithDuration:0.3 animations:^{
+        self.containerViewController.backgroundView.alpha = 0;
+    }];
+    [UIView animateWithDuration:0.1 animations:^{
+        self.contentView.transform = CGAffineTransformScale(CGAffineTransformIdentity, 1.1, 1.1);
     } completion:^(BOOL finished) {
-        [self clear];
-        if (completion) completion();
-        [self postDidHideNotification];
-        self.containerViewController.view.alpha = 1;
+        [UIView animateWithDuration:0.2 delay:0 options:UIViewAnimationOptionCurveEaseOut animations:^{
+            self.contentView.alpha = 0;
+            self.contentView.transform = CGAffineTransformScale(CGAffineTransformIdentity, 0.4, 0.4);
+        } completion:^(BOOL finalFinished){
+            self.contentView.alpha = 1;
+            self.contentView.transform = CGAffineTransformScale(CGAffineTransformIdentity, 1, 1);
+            [self clear];
+            if (completion) completion();
+            [self postDidHideNotification];
+        }];
     }];
 }
 
@@ -217,6 +240,15 @@ NSString *const SRMModalViewDidHideNotification = @"SRMModalViewDidHideNotificat
     if ([self.delegate respondsToSelector:@selector(modalViewDidHide:)]) {
         [self.delegate modalViewDidHide:self];
     }
+}
+
+- (void)setContainerBackgroundOpacity:(CGFloat)backgroundOpacity {
+    // UIView cannot handle touch event when alpha less than or equal to 0.01.
+    if (backgroundOpacity <= 0.01) {
+        backgroundOpacity = 0.02;
+    }
+    
+    self.containerViewController.backgroundView.alpha = backgroundOpacity;
 }
 
 #pragma mark Getter
