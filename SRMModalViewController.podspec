@@ -1,7 +1,7 @@
 Pod::Spec.new do |s|
 
   s.name         = "SRMModalViewController"
-  s.version      = "0.0.2"
+  s.version      = "0.0.2.1"
   s.summary      = "SRMModalViewController support a easy way to display a view with modal style."
   s.description  = "SRMModalViewController support a easy way to display a view with modal style.You will love it."
   s.homepage     = "https://github.com/SongRanMark/SRMModalViewController"
