@@ -160,7 +160,15 @@ NSString *const SRMModalViewDidHideNotification = @"SRMModalViewDidHideNotificat
     self.contentView = nil;
     self.contentViewController = nil;
     self.window.rootViewController = nil;
-    self.window.hidden = YES;
+    /* 
+     * The problem is that may influence getting windows of application.
+     * If set hidden of window as yes rather than destroy window instance every
+     * clear time.
+     * e.g.
+     * UIWindow *window = [UIApplication sharedApplication].windows.lastObject;
+     * [MBProgressHUD showHUDAddedTo:window animated:YES];
+     */
+    self.window = nil;
     [[UIApplication sharedApplication].delegate.window makeKeyAndVisible];
     [self deleteReferenceFromSelf];
 }
@@ -265,6 +273,7 @@ NSString *const SRMModalViewDidHideNotification = @"SRMModalViewDidHideNotificat
 - (UIWindow *)window {
     if (!_window) {
         _window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
+        // In order to over status bar or keyboard is showing already, set level of window as alert
         _window.windowLevel = UIWindowLevelAlert;
         _window.opaque = NO;
     }

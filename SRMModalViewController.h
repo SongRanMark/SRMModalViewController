@@ -55,6 +55,7 @@ extern NSString *const SRMModalViewDidHideNotification;
 
 @protocol SRMModalViewControllerDelegate <NSObject>
 
+@optional
 - (void)modalViewWillShow:(SRMModalViewController *)modalViewController;
 - (void)modalViewDidShow:(SRMModalViewController *)modalViewController;
 - (void)modalViewWillHide:(SRMModalViewController *)modalViewController;
