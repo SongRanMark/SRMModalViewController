@@ -53,14 +53,13 @@ NSString *const SRMModalViewDidHideNotification = @"SRMModalViewDidHideNotificat
     return sharedInstance;
 }
 
-- (void)showViewWithController:(UIViewController *)viewController {
-    [self showViewWithController:viewController size:viewController.view.frame.size];
+- (void)showViewWithController:(UIViewController *)viewController size:(CGSize)size {
+    viewController.view.frame = CGRectMake(0, 0, size.width, size.height);
+    [self showViewWithController:viewController];
 }
 
-- (void)showViewWithController:(UIViewController *)viewController size:(CGSize)size {
-    self.contentViewController = viewController;
-    viewController.view.frame = CGRectMake(0, 0, size.width, size.height);
-    [self showView:viewController.view size:size];
+- (void)showViewWithController:(UIViewController *)viewController {
+    [self showView:viewController.view withController:viewController];
 }
 
 - (void)showView:(UIView *)view size:(CGSize)size {
@@ -69,18 +68,23 @@ NSString *const SRMModalViewDidHideNotification = @"SRMModalViewDidHideNotificat
 }
 
 - (void)showView:(UIView *)view {
+    [self showView:view withController:nil];
+}
+
+- (void)showView:(UIView *)view withController:(UIViewController *)viewController {
     if (self.contentView) {
         [self hidingWithAnimationStyleDefaultAndCompletion:^{
-            [self justShowView:view];
+            [self justShowView:view withController:viewController];
         }];
         
         return;
     }
     
-    [self justShowView:view];
+    [self justShowView:view withController:viewController];
 }
 
-- (void)justShowView:(UIView *)view {
+- (void)justShowView:(UIView *)view withController:(UIViewController *)viewController {
+    self.contentViewController = viewController;
     self.containerViewController.backgroundView.backgroundColor = self.backgroundColor;
     [self setContainerBackgroundOpacity:self.backgroundOpacity];
     self.containerViewController.backgroundView.alpha = self.backgroundOpacity;
