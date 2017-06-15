@@ -38,13 +38,13 @@ view.backgroundColor = [UIColor whiteColor];
 [SRMModalViewController sharedInstance].backgroundColor = [UIColor blackColor];
 ```
 
-![](https://github.com/SongRanMark/SRMModalViewController/blob/master/README resource/BackgroundColor.gif)
+![](https://github.com/SongRanMark/SRMModalViewController/blob/master/README%20resource/BackgroundColor.gif)
 
 ```objective-c
 [SRMModalViewController sharedInstance].backgroundOpacity = 0.5;
 ```
 
-![](https://github.com/SongRanMark/SRMModalViewController/blob/master/README resource/BackgroundOpacity.gif)
+![](https://github.com/SongRanMark/SRMModalViewController/blob/master/README%20resource/BackgroundOpacity.gif)
 
 #### Show another one in a modal view diplayed already.
 
@@ -56,7 +56,7 @@ SRMModalViewController *modalViewController = [SRMModalViewController new];
 [modalViewController showView:self.contentView];
 ```
 
-![](https://github.com/SongRanMark/SRMModalViewController/blob/master/README resource/ShowAnother.gif)
+![](https://github.com/SongRanMark/SRMModalViewController/blob/master/README%20resource/ShowAnother.gif)
 
 You can download example project to get more info.
 
